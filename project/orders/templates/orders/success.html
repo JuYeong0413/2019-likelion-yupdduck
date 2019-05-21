@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <h2 class="h-text">주문 완료</h2>
+    <h5 class="h-text">{{ user.username }}님이 주문하신 내역은 다음과 같습니다.</h5>
+    <br>
+    
+    <div class="col-3 order-text">
+        <div class="card">
+          <div class="card-header text-center">
+            주문번호 : {{ order.id }}
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title">엽기떡볶이 {{ order.spicy }}</h5>
+            <p class="card-text">
+                {% if sidemenus %}
+                    {% for item in sidemenus %}
+                        {{ item }}<br>
+                    {% endfor %}
+                {% endif %}
+                {% if toppings %}
+                    {% for item in toppings %}
+                        {{ item }}<br>
+                    {% endfor %}
+                {% endif %}
+                {% if order.drink %}
+                    {{ order.drink }}
+                {% endif %}
+            </p>
+          </div>
+        </div>
+    </div>
+    <br><br>
+    <button type="button" onclick="topFunction()" class="scrollBtn" id="myBtn">Top</button><br><br>
+{% endblock %}

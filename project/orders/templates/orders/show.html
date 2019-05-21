@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <h2 class="h-text">{{ user.username }}님의 주문내역</h2>
+    <br>
+    
+    <div class="row">
+        {% for order in orders %}
+        <div class="col-3">
+            <div class="card">
+              <div class="card-header text-center">
+                주문번호 : {{ order.id }}
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">엽기떡볶이 {{ order.spicy }}</h5>
+                <p class="card-text">
+                    {% for sidemenu in order.sidemenus_as_list %}
+                        {{ sidemenu }}<br>
+                    {% endfor %}
+                    
+                    {% for topping in order.toppings_as_list %}
+                        {{ topping }}<br>
+                    {% endfor %}
+                    
+                    {% if order.drink %}
+                        {{ order.drink }}<br>
+                    {% endif %}
+                </p>
+                <p class="text-muted">
+                    {{ order.created_at }}
+                </p>
+              </div>
+              <div class="card-footer">
+                  
+                
+                * 리뷰 작성하기<br>
+                <form action="{% url 'orders:create_review' order.id %}" method="POST">
+                {% csrf_token %}
+                    <div class="row">
+                        <div class="col-8">
+                            <input type="text" class="form-control" name="content">
+                        </div>
+                        <div class="col-4">
+                            <input type="hidden" name="id" value="{{ order.id }}">
+                            <input type="submit" class="btn btn-outline-danger" value="작성">
+                        </div>
+                    </div>
+                </form>
+                
+                {% for review in order.reviews.all %}
+                    {{ review.content }}<br>
+                {% endfor %}
+                
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <br><br>
+    <button type="button" onclick="topFunction()" class="scrollBtn" id="myBtn">Top</button><br><br>
+{% endblock %}

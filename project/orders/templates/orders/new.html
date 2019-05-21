@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <h2 class="h-text">주문하기</h2>
+    <h5 class="h-text">모든 엽기떡볶이에는 치즈+햄+단무지가 기본으로 제공됩니다.</h5>
+    <br>
+    <form action="{% url 'orders:create' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+			<label class="control-label">* 매운맛 조절</label>
+			<div class="col-xs-2">
+				<select class="custom-select" name="spicy">
+					<option value="매운맛">매운맛</option>
+					<option value="오리지널" selected>오리지널(엽떡기본)</option>
+					<option value="덜매운맛">덜매운맛</option>
+					<option value="엽떡초보맛">엽떡초보맛</option>
+					<option value="착한맛">착한맛</option>
+				</select>
+			</div>
+		</div>
+		
+		<br>
+		
+		<label>* 사이드 메뉴</label>
+		<div class="container row">
+    		<div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sidemenu1" value="1" name="sidemenu">
+                <label class="custom-control-label" for="sidemenu1">주먹김밥</label>
+            </div>
+            &nbsp; &nbsp;
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sidemenu2" value="2" name="sidemenu">
+                <label class="custom-control-label" for="sidemenu2">계란찜</label>
+            </div>
+        </div>
+        
+        <br>
+        
+        <label>* 토핑</label>
+        {% include 'orders/topping.html' %}
+		
+		<br>
+		
+		<label>* 음료</label>
+		<div class="container row">
+    		<div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="drink" value="써핑쿨" name="drink">
+                <label class="custom-control-label" for="drink">써핑쿨</label>
+            </div>
+        </div>
+		
+		<br>
+		
+        <input type="submit" class="btn btn-danger" value="주문하기">
+    </form>
+    <br><br>
+{% endblock %}
