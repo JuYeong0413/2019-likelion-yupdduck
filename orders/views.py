@@ -62,6 +62,7 @@ def create(request):
             toppings.append('중국당면')
         
         str_toppings = ', '.join(str(y) for y in toppings)
+        pdb.set_trace()
         
         drink = request.POST.get('drink')
         order = Order.objects.create(spicy=spicy, sidemenus=str_sidemenus, toppings=str_toppings, drink=drink, user=currentuser)
